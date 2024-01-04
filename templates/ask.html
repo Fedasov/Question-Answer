@@ -1,0 +1,33 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="create-question-form form-bottom">
+    <h2 class="size">New Questions </h2>
+    <form method="POST">
+        {% csrf_token %}
+        <p class="wrong-pas">{{ form.errors }}</p>
+        <div class="mb-4">
+            <label class="form-label">Title</label>
+            {{ form.title }}
+<!--            <textarea class="form-control" rows="3" placeholder="Header field"></textarea>-->
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Text</label>
+            {{ form.content }}
+<!--          <textarea class="form-text-height form-control" rows="3" placeholder="Reveal the essence of the question"></textarea>-->
+        </div>
+
+        <div class="mb-4">
+            {{ form.non_field_errors }}
+          <label class="form-label">Tags (no more than three tags)</label>
+            <p>{{ form.tags.errors.as_text }}</p>
+            {{ form.tags }}
+<!--          <input class="form-control" placeholder="C++, HTML, CSS">-->
+        </div>
+
+        <button type="submit" class="btn btn-primary">ASK</button>
+    </form>
+</div>
+{% endblock %}

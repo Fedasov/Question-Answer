@@ -1,0 +1,25 @@
+{% extends 'layouts/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="create-question-form form-bottom">
+      <h2>Log In</h2>
+      <form method="POST">
+          {% csrf_token %}
+          <p class="wrong-pas">{{ form.non_field_errors }}</p>
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+              {{ form.username }}
+            <div id="usernameHelp" class="form-text">We'll never share your username with anyone else.</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+              {{ form.password }}
+          </div>
+          <div class="md-3">
+              <p><a class="link-opacity-25-hover" href="{% url 'signup' %}">Сreate a new account</a></p>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+</div>
+{% endblock %}

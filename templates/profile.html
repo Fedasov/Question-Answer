@@ -1,0 +1,36 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="name">
+    <h2>Settings: Sergey Fedasov</h2>
+</div>
+
+<div class="row top-profile">
+      <div class="col-3">
+          {% if request.user.profile.avatar %}
+          <div class="col-lg-4">
+              <img class="rounded-circle me-1" width="200" height="200" src="{{ request.user.profile.avatar.url }}" alt="Profile Avatar"> <!--src="{% static '/images/avatarka.jpg' %}"-->
+          </div>
+          {% endif %}
+      </div>
+      <div class="col-9">
+          <div class="create-question-form form-bottom">
+              <form method="post" enctype="multipart/form-data">
+                  <div class="mb-2">
+                    <label class="form-label">Username: </label>
+                    {{ request.user.username }}
+                  </div>
+                  <div class="mb-2">
+                    <label class="form-label">Email address: </label>
+                    {{ request.user.email }}
+                  </div>
+                  <div class="md-3">
+                      <p><a class="link-opacity-25-hover" href="{% url 'edit' %}">Edit Profile</a></p>
+                  </div>
+              </form>
+          </div>
+      </div>
+</div>
+
+{% endblock %}

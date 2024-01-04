@@ -1,0 +1,102 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="icon" href="data:;base64,=">
+    <link href="{% static '/bootstrap-5.2.2-dist/css/bootstrap.css' %}" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static '/css/main.css' %}">
+    <link rel="stylesheet" href="{% static '/font/bootstrap-icons.css' %}">
+    <title>Main</title>
+</head>
+<body class="body">
+<header class="p-3 text-bg-dark">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+              <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+            </a>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><a href="{% url 'index' %}" class="nav-link px-2 text-secondary">Home</a></li>
+              <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+              <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+              <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+                {% if request.user.is_authenticated %}
+              <li><a href="{% url 'logout' %}" class="nav-link px-2 text-white">Logout</a></li>
+                {% endif %}
+            </ul>
+            <div>
+                <div class="align-left">
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" action="{% url 'index' %}" method="get">
+                      <input type="search" class="form-control" id="user-input" name="q" placeholder="Search..." aria-label="Search">
+                    </form>
+                </div>
+                <div class="dropdown-menu flex-shrink-0 dropdown position" id="replaceable-content">
+                    {% include 'includes/artists-results-partial.html' %}
+                </div>
+            </div>
+            <div class="button-ask">
+                <a type="button" class="btn btn-success" href="{% url 'ask' %}">Ask !</a>
+            </div>
+            {% if request.user.is_authenticated %}
+                <!--если пользователь авторизован то выполняется код ниже:-->
+                <span class="badge d-flex align-items-center p-1 pe-2 text-dark-emphasis bg-light-subtle border border-dark-subtle rounded-pill">
+                    <a href="{% url 'profile'%}" class="text-decoration-none a_profile">
+                        {% if request.user.profile.avatar %}
+                            <img class="rounded-circle me-1" width="30" height="30" src="{{ request.user.profile.avatar.url }}" alt="">
+                        {% endif %}
+                        {{ request.user.username }}
+                    </a>
+                </span>
+            {% else %}
+                <!--если пользователь не авторизован-->
+                <div class="text-end">
+                  <a type="button" class="btn btn-outline-light me-2" href="{% url 'login' %}">Login</a>
+                  <a type="button" class="btn btn-warning" href="{% url 'signup' %}">Sign-up</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+<main>
+
+<div class="flex-shrink-0">
+    <div class="row top-content">
+          <div class="col-9">
+              <div class="container">
+                  {% block content %}
+                  {% endblock %}
+              </div>
+          </div>
+          <div class="col-3">
+              <h3>Popular tags</h3>
+                  <div class="PopularTags">
+                      {% for tag in pop_tags %}
+                        <a href="{% url 'popular_tags' tag_id=tag.id %}" type="button" class="btn btn-outline-primary">{{ tag.tag }}</a>
+                      {% endfor %}
+                  </div>
+              <br>
+              <h3>Best Members</h3>
+                  <ul class="list-group list-group-flush">
+                      {% for members in best_members %}
+                        <li class="list-group-item">
+                            <button class="black-text badge d-flex align-items-center p-1 pe-2 text-dark-emphasis bg-light-subtle border border-dark-subtle rounded-pill">
+                                <img class="rounded-circle me-1" width="24" height="24" src="{{ members.avatar.url }}" alt="">{{ members.user.username }}</button>
+                        </li>
+                      {% endfor %}
+                  </ul>
+          </div>
+    </div>
+</div>
+
+</main>
+
+
+<script src="{% static 'bootstrap-5.2.2-dist/js/bootstrap.js' %}" crossorigin="anonymous"></script>
+<script src="{% static '/js/jquery-3.7.1.min.js' %}"></script>
+<script src="{% static '/js/main.js' %}" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+.PopularTags a {
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+.BestMembers button {
+    margin-top: 5px;
+    margin-left: 50px;
+}
+
+.BestMembers button img {
+    width: 30px;
+    height: 30px;
+}
+
+.article div{
+    padding: 100px;
+}
+
+.question {
+    border: 1px solid grey;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.question-image {
+    margin-left: -10px;
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.question-text {
+    margin-left: -80px;
+}
+
+.correct-checkpoint {
+    margin-left: -80px;
+}
+
+.question-title {
+    font-size: 30px;
+    font-family: Helvetica;
+    font-weight: bold;
+}
+
+.reaction-answer {
+    margin-left: -10px;
+    margin-top: 30px;
+}
+
+.reaction-question {
+    margin-left: -10px;
+    margin-top: 30px;
+}
+
+.black-text {
+    color: black;
+}
+
+.contains {
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.size {
+    margin-right: 50px;
+}
+
+.title{
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.level {
+    margin-top: 80px;
+}
+
+.tags {
+    margin-left: 50px;
+}
+
+.create-question-form {
+    margin-left: 20px;
+}
+
+.body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+textarea.form-text-height {
+    min-height: calc(15em + 2rem + 100px);
+}
+
+.form-bottom {
+    margin-bottom: 20px;
+}
+
+.right-answer {
+    border: 3px solid black;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.answer {
+    border: 1px solid black;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.a_profile {
+    color: white !important;
+}
+
+.top-profile {
+    margin-top: 40px;
+}
+
+.top-content {
+    margin-top: 20px;
+}
+
+.border-width{
+    width: 1px;
+}
+
+.button-ask {
+    margin-left: 20px;
+    margin-right: 30px;
+}
+
+.wrong-pas {
+    color: red;
+}
+
+.disable {
+    pointer-events: none; /* делаем ссылку некликабельной */
+    cursor: default;
+}
+
+.position {
+    position: absolute;
+    z-index: 2;
+}
+
+@keyframes blinker {
+    from {opacity: 1.0;}
+    to {opacity: 0.0;}
+}
+
+.blink {
+    text-decoration: blink;
+    animation-name: blinker;
+    animation-duration: 0.6s;
+    animation-iteration-count:infinite;
+    animation-timing-function:ease-in-out;
+    animation-direction: alternate;
+  }

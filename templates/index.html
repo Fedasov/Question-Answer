@@ -1,0 +1,35 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="title">
+  <h2 class="size">New Questions </h2>
+  <a class="size-a" href="{% url 'hot' %}">Hot Question</a>
+</div>
+{% for object in objects %}
+    <div class="row question">
+        <div class="col-3">
+            {% if object.user.avatar %}
+              <img src="{{ object.user.avatar.url }}" class="question-image" alt="...">
+            {% endif %}
+            {% csrf_token %}
+            <div class="reaction-question">
+                    {% include 'includes/reaction.html' %}
+            </div>
+        </div>
+        <div class="col-9 question-text">
+            <div class="question-title"> <a href="{% url 'question' question_id=object.id %}">{{ object.title }}</a></div>
+            <div>{{ object.content }}</div>
+            <div class="title level">
+                <p><a class="link-opacity-100" href="{% url 'question' question_id=object.id %}">answer ({{ object.answer_count }})</a></p>
+                <p class="tags">Tags:
+                    {% for tag in object.tags.all %}
+                        <a class="link-opacity-100" href="{% url 'popular_tags' tag_id=tag.id %}">{{ tag }}</a>
+                    {% endfor %}
+               </p>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% include 'includes/pagination.html' %}
+{% endblock %}

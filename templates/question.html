@@ -1,0 +1,89 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="container">
+    <div class="row question">
+        <div class="col-3">
+            {% if question.user.avatar %}
+                <img src="{{ question.user.avatar.url }}" class="question-image" alt="...">
+            {% endif %}
+            <div class="reaction-question">
+                <button type="button" data-id="{{ question.id }}" data-like="True" class="btn btn-light">
+                    <i class="bi bi-hand-thumbs-up{% for o in question.like_model.all %}{% if o.user == request.user.profile and o.positive%}-fill{% endif %}{% endfor %}"></i>
+                </button>
+
+                <span>{{ question.rating }}</span>
+
+                <button type="button" data-id="{{ object.id }}" data-like="False" class="btn btn-light">
+                    <i class="bi bi-hand-thumbs-down{% for o in question.like_model.all %}{% if o.user == request.user.profile and not o.positive%}-fill{% endif %}{% endfor %}"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-9 question-text">
+            <div class="question-title">{{ question.title }}</div>
+            <div><p>{{ question.content }}</p></div>
+            <div class="title level">
+                <p>answer ({{ question.answer_count }})</p>
+                <p class="tags">Tags:
+                    {% for tag in question.tags.all %}
+                        <a class="link-opacity-100" href="{% url 'popular_tags' tag_id=tag.id %}">{{ tag }}</a>
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <h2>Answers:</h2>
+    <div id="div">
+        {% for object in objects %}
+            <div class="answer row">
+                 <div class="col-3">
+                     {% if object.user.avatar %}
+                        <img src="{{ object.user.avatar.url }}" class="question-image" alt="...">
+                     {% endif %}
+                     <div class="reaction-answer">
+                         {% include 'includes/reaction.html' %}
+                     </div>
+                </div>
+
+                 <div class="col-9 correct-checkpoint">
+                    <div><p>{{ object.content }}</p></div>
+                     {% if request.user.id == question.user.id %}
+                     <div class="fluency correct-answer form-check">
+                        {% if object.correct %}
+                            <input class="form-check-input" data-id="{{ object.id }}" type="checkbox" checked>
+                        {% else %}
+                            <input class="form-check-input" data-id="{{ object.id }}" type="checkbox">
+                        {% endif %}
+                        <label class="form-check-label">
+                            Correct!
+                        </label>
+                         {% if object.correct %}
+                            <div class="fs-2 mb-3">
+                                <i class="bi bi-check"></i>Correct!
+                            </div>
+                         {% endif %}
+                     </div>
+                     {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <br>
+    {% include 'includes/pagination.html' %}
+    <br>
+    <form class="form-bottom" method="POST">
+        {% csrf_token %}
+      <div class="mb-4">
+          <label class="form-label">Write an answer</label>
+          {{ form.content }}
+      </div>
+      <button type="submit" data-ws_url="{{ centrifugo.ws_url }}" data-token="{{ centrifugo.token }}" data-channel="{{ centrifugo.channel }}" data-url_avatar="{{ request.user.profile.avatar.url }}" class="btn btn-primary channel">Submit</button>
+    </form>
+</div>
+  <script src="https://unpkg.com/centrifuge@5.0.1/dist/centrifuge.js"></script>
+  <script src="{% static '/js/centrifugo.js' %}"></script>
+{% endblock %}

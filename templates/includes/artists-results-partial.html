@@ -1,0 +1,10 @@
+{% if questions %}
+  <ul>
+  {% for question in questions %}
+    <li>
+        <a class="dropdown-item" href="{% url 'question' question_id=question.id %}">{{ question.title }}</a>
+        {{ question.content }}
+    </li>
+  {% endfor %}
+  </ul>
+{% endif %}
